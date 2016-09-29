@@ -3,16 +3,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Econ Graph</title>
+    <title>Econ Graph Generator</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   </head>
   <body>
     <div class="container">
       <div style="padding-top:20px;padding-bottom:40px;">
         <h1 class="text-xs-center">Econ Graph Generator</h1>
-        <label for="input-a"><i>a</i> (horizontal intercept)</label>
+        <label for="input-a">Horizontal Intercept (<i>a</i>)</label>
         <input class="form-control" type="number" id="input-a"/>
-        <label for="input-b"><i>b</i> (negative slope)</label>
+        <label for="input-b">Slope (<i>-b</i>)</label>
         <input class="form-control" type="number" id="input-b"/>
         <label for="input-b">Graph Title</label>
         <input class="form-control" type="text" id="input-title"/>
@@ -21,11 +25,11 @@
         <label for="input-b">Y-Axis Label</label>
         <input class="form-control" type="text" id="input-yaxis"/>
         </br>
-        <button class="btn btn-outline-primary" id="submit">Submit</button>
+        <button class="btn btn-outline-primary" id="submit">Create Graph</button>
         <canvas class="img-fluid" id="graph"></canvas>
       </div>
       <footer class="text-xs-center">
-        Made by <a href="https://matthewwang.me">Matthew Wang</a>
+        Made by <a href="https://matthewwang.me">Matthew Wang</a> on <a href="https://github.com/malsf21/econ-grapher">GitHub</a>.
       </footer>
     </div>
     <script src="js/jquery.min.js"></script>
