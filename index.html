@@ -17,11 +17,11 @@
         <label for="input-a">Horizontal Intercept (<i>a</i>)</label>
         <input class="form-control" type="number" id="input-a"/>
         <label for="input-b">Slope (<i>-b</i>)</label>
-        <!-- <input class="form-control" type="number" id="input-b"/>
+        <input class="form-control" type="number" id="input-b"/>
         <label for="input-b">Maximum (<i>max</i>) </label>
         <input class="form-control" type="number" id="input-max"/>
         <label for="input-b">Minimum (<i>min</i>) </label>
-        <input class="form-control" type="number" id="input-min"/> -->
+        <input class="form-control" type="number" id="input-min"/>
         <label for="input-b">Graph Title</label>
         <input class="form-control" type="text" id="input-title"/>
         <label for="input-b">X-Axis Label</label>
@@ -44,8 +44,8 @@
         graph(
           $("#input-a").val(),
           $("#input-b").val(),
-          // $("#input-max").val(),
-          // $("#input-min").val(),
+          $("#input-max").val(),
+          $("#input-min").val(),
           $("#input-title").val(),
           $("#input-xaxis").val(),
           $("#input-yaxis").val()
@@ -53,12 +53,12 @@
       });
       function graph(a,b,title, xlabel, ylabel){
         var ctx = $("#graph");
-        // Chart.scaleService.updateScaleDefaults('linear', {
-        //   ticks: {
-        //       min: parseFloat(min),
-        //       max: parseFloat(max)
-        //       }
-        // })
+        Chart.scaleService.updateScaleDefaults('linear', {
+          ticks: {
+              min: parseFloat(min),
+              max: parseFloat(max)
+              }
+        })
         var scatterChart = new Chart(ctx, {
           type: 'line',
           data: {
