@@ -51,7 +51,7 @@
           $("#input-yaxis").val()
         );
       });
-      function graph(a,b,title, xlabel, ylabel){
+      function graph(a,b,min,max,title,xlabel,ylabel){
         var ctx = $("#graph");
         Chart.scaleService.updateScaleDefaults('linear', {
           ticks: {
