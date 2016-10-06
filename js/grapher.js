@@ -10,6 +10,17 @@ function getRandomColor() {
   return color;
 }
 
+/*
+function inputIsEmpty(input){
+  if($.trim($("#"+input).val()).length === 0) {
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+*/
+
 function createGraph(title, xlabel, ylabel, min, max){
   var ctx = $("#graph");
   Chart.scaleService.updateScaleDefaults('linear', {
@@ -35,20 +46,24 @@ function createGraph(title, xlabel, ylabel, min, max){
           type: 'linear',
           position: 'bottom',
           ticks: {
-            beginAtZero:true
+            max: max,
+            min: min
           },
           scaleLabel: {
             display: true,
-            labelString: xlabel
+            labelString: xlabel,
+            fontSize: 24
           }
         }],
         yAxes: [{
           ticks: {
-            beginAtZero:true
+            max: max,
+            min: min
           },
           scaleLabel: {
             display: true,
-            labelString: ylabel
+            labelString: ylabel,
+            fontSize: 30
           }
         }]
       }
@@ -109,19 +124,59 @@ function renderMenu(){
   }
 }
 
+function renderAlert(type){
+  if (type == "success"){
+    $("#alert-container").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>It worked!</strong> Your information has been plotted correctly.</div>");
+    /*
+    <div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\">
+      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+        <span aria-hidden=\"true\">&times;</span>
+      </button>
+      <strong>It worked!</strong> Your information has been plotted correctly.
+    </div>
+    */
+  }
+  else if (failed == "zero"){
+    $("#alert-container").append("<div class=\"alert alert-warning alert-dismissible fade in\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>Just letting you know,</strong> you have zero lines on your graph.</div>");
+  }
+  else if (failed == "input"){
+    $("#alert-container").append("<div class=\"alert alert-danger alert-dismissible fade in\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>Uh oh!</strong> One of your inputs is either unfilled, or broken!</div>");
+  }
+  else{
+    $("#alert-container").append("<div class=\"alert alert-danger alert-dismissible fade in\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>Uh oh!</strong> Something broke, but we don't know why. Contact the creators for help!</div>");
+  }
+}
+
 function render(){
+  failed = false;
   $("#graph-container").empty();
   $("#graph-container").append('<canvas class="img-fluid" id="graph"></canvas>');
-  if (Object.keys(lines).length > 0){
-    createGraph(
-      $("#input-title").val(),
-      $("#input-xaxis").val(),
-      $("#input-yaxis").val(),
-      $("#input-max").val(),
-      $("#input-min").val()
-    );
+  //if (inputIsEmpty("input-title") || inputIsEmpty("input-xaxis") || inputIsEmpty("input-yaxis") || inputIsEmpty("input-max") || inputIsEmpty("input-min")){
+    if (Object.keys(lines).length > 0){
+      createGraph(
+        $("#input-title").val(),
+        $("#input-xaxis").val(),
+        $("#input-yaxis").val(),
+        $("#input-max").val(),
+        $("#input-min").val()
+      );
+    }
+    else{
+      failed = "zero";
+    }
+    /*
   }
+  else{
+    failed = "input"
+  }
+  */
   renderMenu();
+  if (failed === false){
+    renderAlert("success");
+  }
+  else{
+    renderAlert(failed);
+  }
 }
 
 $("#create-line-equation").click(function(){
@@ -130,7 +185,7 @@ $("#create-line-equation").click(function(){
     parseFloat($("#input-intercept").val()),
     0,
     0,
-    parseFloat($("#input-intercept").val())/parseFloat($("#input-slope").val()) * -1
+    (parseFloat($("#input-intercept").val())*-1)/parseFloat($("#input-slope").val())
   );
   render();
 });
@@ -146,4 +201,8 @@ $("#create-line-coordinate").click(function(){
 });
 $("#create-graph").click(function(){
   render();
+});
+
+$("#options-toggle").click(function(){
+  $("#options-container").toggle();
 });
