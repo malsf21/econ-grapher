@@ -1,10 +1,11 @@
-<html>
+<html lang="end">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Econ Graph Generator</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -12,25 +13,61 @@
   </head>
   <body>
     <div class="container">
-      <div style="padding-top:20px;padding-bottom:40px;">
-        <h1 class="text-xs-center">Econ Graph Generator</h1>
-        <label for="input-a">Horizontal Intercept (<i>a</i>)</label>
-        <input class="form-control" type="number" id="input-a"/>
-        <label for="input-b">Slope (<i>-b</i>)</label>
-        <input class="form-control" type="number" id="input-b"/>
-        <label for="input-b">Maximum (<i>max</i>) </label>
-        <input class="form-control" type="number" id="input-max"/>
-        <label for="input-b">Minimum (<i>min</i>) </label>
-        <input class="form-control" type="number" id="input-min"/>
-        <label for="input-b">Graph Title</label>
-        <input class="form-control" type="text" id="input-title"/>
-        <label for="input-b">X-Axis Label</label>
-        <input class="form-control" type="text" id="input-xaxis"/>
-        <label for="input-b">Y-Axis Label</label>
-        <input class="form-control" type="text" id="input-yaxis"/>
-        </br>
-        <button class="btn btn-outline-primary" id="submit">Create Graph</button>
+      <h1 class="text-xs-center site-title">Econ Graph Generator</h1>
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>Graph Settings</h2>
+          <label for="input-title">Graph Title</label>
+          <input class="form-control" type="text" id="input-title" value="Example Graph Title" />
+          <label for="input-xaxis">X-Axis Label</label>
+          <input class="form-control" type="text" id="input-xaxis" value="Example X-Axis Label" />
+          <label for="input-yaxis">Y-Axis Label</label>
+          <input class="form-control" type="text" id="input-yaxis" value="Example Y-Axis Label" />
+          <label for="input-max">Maximum (<i>max</i>) </label>
+          <input class="form-control" type="number" id="input-max" value="100" />
+          <label for="input-min">Minimum (<i>min</i>) </label>
+          <input class="form-control" type="number" id="input-min" value="0" />
+          </br>
+          <button class="btn btn-outline-primary" id="create-graph">Update Graph</button>
+        </div>
+        <div class="col-sm-8">
+          <h2>Line Settings</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <h3>In Form <code>x = my + b</code></h3>
+              <label for="input-name">Line Name</label>
+              <input class="form-control" type="text" id="input-name-equation" />
+              <label for="input-intercept">Horizontal Intercept (<i>b</i>)</label>
+              <input class="form-control" type="number" id="input-intercept"/>
+              <label for="input-slope">Slope (<i>m</i>)</label>
+              <input class="form-control" type="number" id="input-slope"/>
+              </br>
+              <button class="btn btn-outline-primary" id="create-line-equation">Add Line</button>
+            </div>
+            <div class="col-md-6">
+              <h3>In Form <code>(x1,y1), (x2,y2)</code></h3>
+              <label for="input-name">Line Name</label>
+              <input class="form-control" type="text" id="input-name-coordinate" />
+              <label for="input-x1">x1</label>
+              <input class="form-control" type="number" id="input-x1" />
+              <label for="input-y1">y1</label>
+              <input class="form-control" type="number" id="input-y1" />
+              <label for="input-x2">x2</label>
+              <input class="form-control" type="number" id="input-x2" />
+              <label for="input-y2">y2</label>
+              <input class="form-control" type="number" id="input-y2" />
+              </br>
+              <button class="btn btn-outline-primary" id="create-line-coordinate">Add Line</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="graph-container">
         <canvas class="img-fluid" id="graph"></canvas>
+      </div>
+      <h2>Current Lines</h2>
+      <div id="panel-container">
+        Nothing to see here. Try adding a line!
       </div>
       <footer class="text-xs-center">
         Made by <a href="https://matthewwang.me">Matthew Wang</a> and <a href="https://jmace.me">John Mace</a> on <a href="https://github.com/malsf21/econ-grapher">GitHub</a>.
@@ -39,75 +76,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/chart.min.js"></script>
-    <script>
-      $("#submit").click(function(){
-        graph(
-          $("#input-a").val(),
-          $("#input-b").val(),
-          $("#input-max").val(),
-          $("#input-min").val(),
-          $("#input-title").val(),
-          $("#input-xaxis").val(),
-          $("#input-yaxis").val()
-        );
-      });
-      function graph(a,b,min,max,title,xlabel,ylabel){
-        var ctx = $("#graph");
-        Chart.scaleService.updateScaleDefaults('linear', {
-          ticks: {
-              min: parseFloat(min),
-              max: parseFloat(max)
-              }
-        })
-        var scatterChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            datasets: [{
-              label: title,
-              data: [{
-                x: parseFloat(a),
-                y: 0
-              }, {
-                x: 0,
-                y: parseFloat(a)/parseFloat(b)
-              }],
-              fill: false,
-              backgroundColor: "rgba(122,208,237,1)",
-              borderColor: "rgba(122,208,237,1)"
-            }]
-          },
-          options: {
-            responsive: true,
-            title:{
-              display: true,
-              text: title,
-              fontSize: 30
-            },
-            scales: {
-              xAxes: [{
-                type: 'linear',
-                position: 'bottom',
-                ticks: {
-                  beginAtZero:true
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: xlabel
-                }
-              }],
-              yAxes: [{
-                ticks: {
-                  beginAtZero:true
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: ylabel
-                }
-              }]
-            }
-          }
-        });
-      }
-    </script>
+    <script src="js/grapher.js"></script>
   </body>
 </html>
