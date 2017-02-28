@@ -1,4 +1,4 @@
-<html lang="end">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,57 +14,56 @@
   <body>
     <div class="container">
       <h1 class="text-xs-center site-title">Econ Graph Generator</h1>
+      <p class="text-xs-center">
+         Not new, not improved.
+      </p>
       <div id="alert-container"></div>
       <div class="text-xs-center">
-        <button class="btn btn-outline-primary" id="options-toggle">Toggle Options</button>
+        <button class="btn btn-outline-primary" id="options-graph-toggle">Toggle Graph Options</button> <button class="btn btn-outline-primary" id="options-line-toggle">Toggle Line Options</button>
       </div>
-      <div id="options-container">
+      <div id="options-graph-container" style="display:none;">
+        <h2>Graph Settings</h2>
+        <label for="input-title">Graph Title</label>
+        <input class="form-control" type="text" id="input-title" value="Example Graph Title" />
+        <label for="input-xaxis">X-Axis Label</label>
+        <input class="form-control" type="text" id="input-xaxis" value="Example X-Axis Label" />
+        <label for="input-yaxis">Y-Axis Label</label>
+        <input class="form-control" type="text" id="input-yaxis" value="Example Y-Axis Label" />
+        <label for="input-max">Maximum (<i>max</i>) </label>
+        <input class="form-control" type="number" id="input-max" value="100" />
+        <label for="input-min">Minimum (<i>min</i>) </label>
+        <input class="form-control" type="number" id="input-min" value="0" />
+        </br>
+        <button class="btn btn-outline-primary" id="create-graph">Update Graph</button>
+      </div>
+      <div id="options-line-container" style="display:none;">
+        <h2 class="text-xs-center">Line Settings</h2>
         <div class="row">
-          <div class="col-sm-4">
-            <h2>Graph Settings</h2>
-            <label for="input-title">Graph Title</label>
-            <input class="form-control" type="text" id="input-title" value="Example Graph Title" />
-            <label for="input-xaxis">X-Axis Label</label>
-            <input class="form-control" type="text" id="input-xaxis" value="Example X-Axis Label" />
-            <label for="input-yaxis">Y-Axis Label</label>
-            <input class="form-control" type="text" id="input-yaxis" value="Example Y-Axis Label" />
-            <label for="input-max">Maximum (<i>max</i>) </label>
-            <input class="form-control" type="number" id="input-max" value="100" />
-            <label for="input-min">Minimum (<i>min</i>) </label>
-            <input class="form-control" type="number" id="input-min" value="0" />
+          <div class="col-md-6">
+            <h3>In Form <code>x = my + b</code></h3>
+            <label for="input-name">Line Name</label>
+            <input class="form-control" type="text" id="input-name-equation" />
+            <label for="input-intercept">Horizontal Intercept (<i>b</i>)</label>
+            <input class="form-control" type="number" id="input-intercept"/>
+            <label for="input-slope">Slope (<i>m</i>)</label>
+            <input class="form-control" type="number" id="input-slope"/>
             </br>
-            <button class="btn btn-outline-primary" id="create-graph">Update Graph</button>
+            <button class="btn btn-outline-primary" id="create-line-equation">Add Line</button>
           </div>
-          <div class="col-sm-8">
-            <h2 class="text-xs-center">Line Settings</h2>
-            <div class="row">
-              <div class="col-md-6">
-                <h3>In Form <code>x = my + b</code></h3>
-                <label for="input-name">Line Name</label>
-                <input class="form-control" type="text" id="input-name-equation" />
-                <label for="input-intercept">Horizontal Intercept (<i>b</i>)</label>
-                <input class="form-control" type="number" id="input-intercept"/>
-                <label for="input-slope">Slope (<i>m</i>)</label>
-                <input class="form-control" type="number" id="input-slope"/>
-                </br>
-                <button class="btn btn-outline-primary" id="create-line-equation">Add Line</button>
-              </div>
-              <div class="col-md-6">
-                <h3>In Form <code>(x1,y1), (x2,y2)</code></h3>
-                <label for="input-name">Line Name</label>
-                <input class="form-control" type="text" id="input-name-coordinate" />
-                <label for="input-x1">x1</label>
-                <input class="form-control" type="number" id="input-x1" />
-                <label for="input-y1">y1</label>
-                <input class="form-control" type="number" id="input-y1" />
-                <label for="input-x2">x2</label>
-                <input class="form-control" type="number" id="input-x2" />
-                <label for="input-y2">y2</label>
-                <input class="form-control" type="number" id="input-y2" />
-                </br>
-                <button class="btn btn-outline-primary" id="create-line-coordinate">Add Line</button>
-              </div>
-            </div>
+          <div class="col-md-6">
+            <h3>In Form <code>(x1,y1), (x2,y2)</code></h3>
+            <label for="input-name">Line Name</label>
+            <input class="form-control" type="text" id="input-name-coordinate" />
+            <label for="input-x1">x1</label>
+            <input class="form-control" type="number" id="input-x1" />
+            <label for="input-y1">y1</label>
+            <input class="form-control" type="number" id="input-y1" />
+            <label for="input-x2">x2</label>
+            <input class="form-control" type="number" id="input-x2" />
+            <label for="input-y2">y2</label>
+            <input class="form-control" type="number" id="input-y2" />
+            </br>
+            <button class="btn btn-outline-primary" id="create-line-coordinate">Add Line</button>
           </div>
         </div>
       </div>
@@ -75,6 +74,7 @@
       <div id="panel-container">
         Nothing to see here. Try adding a line!
       </div>
+      <hr />
       <footer class="text-xs-center">
         Made by <a href="https://matthewwang.me">Matthew Wang</a> and <a href="https://jmace.me">John Mace</a> on <a href="https://github.com/malsf21/econ-grapher">GitHub</a>.
       </footer>

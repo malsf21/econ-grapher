@@ -125,6 +125,7 @@ function renderMenu(){
 }
 
 function renderAlert(type){
+  $("#alert-container").html("")
   if (type == "success"){
     $("#alert-container").append("<div class=\"alert alert-success alert-dismissible fade in\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>It worked!</strong> Your information has been plotted correctly.</div>");
     /*
@@ -180,13 +181,24 @@ function render(){
 }
 
 $("#create-line-equation").click(function(){
-  createLine(
-    $("#input-name-equation").val(),
-    parseFloat($("#input-intercept").val()),
-    0,
-    0,
-    (parseFloat($("#input-intercept").val())*-1)/parseFloat($("#input-slope").val())
-  );
+  if (parseFloat($("#input-slope").val()) >= 0){
+    createLine(
+      $("#input-name-equation").val(),
+      parseFloat($("#input-intercept").val()),
+      $("#input-min").val(),
+      $("#input-max").val(),
+      $("#input-max").val()
+    );
+  }
+  else{
+    createLine(
+      $("#input-name-equation").val(),
+      $("#input-min").val(),
+      $("#input-max").val(),
+      parseFloat($("#input-intercept").val()),
+      $("#input-min").val()
+    );
+  }
   render();
 });
 $("#create-line-coordinate").click(function(){
@@ -203,6 +215,10 @@ $("#create-graph").click(function(){
   render();
 });
 
-$("#options-toggle").click(function(){
-  $("#options-container").toggle();
+$("#options-line-toggle").click(function(){
+  $("#options-line-container").toggle();
+});
+
+$("#options-graph-toggle").click(function(){
+  $("#options-graph-container").toggle();
 });
